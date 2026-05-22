@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteiro Interativo — Flórida 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f7; color: #1a1a2e; }
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: white; padding: 28px 24px 20px; }
+.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+.hero .subtitle { font-size: 13px; opacity: 0.7; margin-bottom: 14px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 99px; padding: 3px 12px; font-size: 12px; }
+.part-tabs { background: #1a1a2e; display: flex; padding: 0 16px; border-bottom: 2px solid rgba(255,255,255,0.1); }
+.part-tab { padding: 10px 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.5); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s; }
+.part-tab.active { color: white; border-bottom-color: #7F77DD; }
+.day-nav { background: white; padding: 12px 16px; display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid #e8ecf0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.day-btn { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: all .18s; white-space: nowrap; }
+.day-btn.active { border-color: currentColor; }
+.day-btn.type-chegada  { background: #e1f5ee; color: #085041; }
+.day-btn.type-parque   { background: #eeedfe; color: #3c3489; }
+.day-btn.type-compras  { background: #faeeda; color: #633806; }
+.day-btn.type-livre    { background: #e6f1fb; color: #0c447c; }
+.day-btn.type-viagem   { background: #faece7; color: #712b13; }
+.day-btn.type-praia    { background: #cdeef9; color: #0a4a6b; }
+.day-btn.type-casa     { background: #f3e8fd; color: #5a1f8a; }
+.day-btn.type-pendente { background: #f1efe8; color: #444441; }
+.day-btn:hover { filter: brightness(0.93); }
+.content { max-width: 860px; margin: 0 auto; padding: 20px 16px 40px; }
+.day-section { display: none; }
+.day-section.active { display: block; }
+.day-card { background: white; border-radius: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); overflow: hidden; }
+.day-header { padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+.day-date-label { font-size: 12px; font-weight: 700; opacity: 0.6; text-transform: uppercase; letter-spacing: .05em; }
+.day-title { font-size: 18px; font-weight: 600; flex: 1; }
+.day-badge { font-size: 11px; font-weight: 700; padding: 3px 11px; border-radius: 99px; }
+.reset-btn { font-size: 11px; padding: 3px 10px; border-radius: 6px; border: 1px solid #ddd; background: white; cursor: pointer; color: #888; display: none; }
+.reset-btn.visible { display: inline-block; }
+.reset-btn:hover { background: #fff0f0; color: #c00; border-color: #fcc; }
+table { width: 100%; border-collapse: collapse; }
+td { padding: 10px 18px; font-size: 14px; vertical-align: top; border-top: 1px solid #f0f2f5; }
+td.t { width: 64px; font-weight: 600; color: #555; font-size: 12px; white-space: nowrap; }
+td.i { width: 30px; text-align: center; font-size: 16px; padding-left:0; padding-right:0; }
+td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line-height: 1.4; }
+.st { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 99px; margin-left: 8px; vertical-align: middle; }
+.st-ok  { background: #d4f5e5; color: #085041; }
+.st-flex{ background: #e8e7fd; color: #3c3489; }
+.st-pend{ background: #fff0c0; color: #7a5500; }
+.row-chegada  { background: #f0faf5; }
+.row-parque   { background: #f2f0fd; }
+.row-compras  { background: #fef9ec; }
+.row-livre    { background: #eef5fd; }
+.row-viagem   { background: #fef3ee; }
+.row-pendente { background: #f9f9f6; }
+.row-praia    { background: #eaf7fc; }
+.row-casa     { background: #fdf5ff; }
+.row-note td  { background: #fffbf0; font-size: 13px; color: #7a6000; font-style: italic; padding: 8px 18px; }
+.alt-block { padding: 10px 18px 14px; }
+.alt-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #888; margin-bottom: 8px; }
+.alt-options { display: flex; flex-direction: column; gap: 6px; }
+.alt-opt { padding: 8px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; background: white; cursor: pointer; font-size: 13px; color: #333; text-align: left; transition: all .15s; }
+.alt-opt:hover { border-color: #7F77DD; background: #f5f4ff; }
+.alt-opt.selected { border-color: #7F77DD; background: #eeedfe; color: #3c3489; font-weight: 600; }
+.alt-opt.selected::before { content: '✓ '; }
+.hdr-chegada  { background: #e1f5ee; color: #085041; }
+.hdr-parque   { background: #eeedfe; color: #3c3489; }
+.hdr-compras  { background: #faeeda; color: #633806; }
+.hdr-livre    { background: #e6f1fb; color: #0c447c; }
+.hdr-viagem   { background: #faece7; color: #712b13; }
+.hdr-pendente { background: #f1efe8; color: #444441; }
+.hdr-praia    { background: #cdeef9; color: #0a4a6b; }
+.hdr-casa     { background: #f3e8fd; color: #5a1f8a; }
+.bdg-chegada  { background: #9fe1cb; color: #085041; }
+.bdg-parque   { background: #cecbf6; color: #3c3489; }
+.bdg-compras  { background: #fac775; color: #633806; }
+.bdg-livre    { background: #b5d4f4; color: #0c447c; }
+.bdg-viagem   { background: #f5c4b3; color: #712b13; }
+.bdg-pendente { background: #d3d1c7; color: #444441; }
+.bdg-praia    { background: #7dd3ee; color: #0a4a6b; }
+.bdg-casa     { background: #d9b4f7; color: #5a1f8a; }
+.refs-section { display: none; }
+.refs-section.active { display: block; }
+.refs { background: white; border-radius: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); padding: 22px 24px; }
+.refs h2 { font-size: 15px; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f0f2f5; }
+.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ref-card { background: #f8f9fb; border-radius: 10px; padding: 13px 15px; }
+.ref-card h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #888; margin-bottom: 8px; }
+.ref-card ul { list-style: none; }
+.ref-card li { font-size: 12.5px; color: #333; line-height: 1.7; }
+.ref-card li strong { color: #1a1a2e; }
+.ref-card a { color: #185FA5; }
+@media(max-width:600px){ .ref-grid{ grid-template-columns:1fr; } .hero h1{font-size:20px;} }
+.footer { text-align: center; font-size: 11px; color: #aaa; padding: 16px; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>✈️ Flórida 2026 — Roteiro Interativo</h1>
+  <p class="subtitle">Ricardo · Aline · Guilherme · Desirée · Fernanda · Daniel · Carol · Ricardo Brum · Isabel</p>
+  <div class="hero-pills">
+    <span class="hero-pill">23 mai → 4 jun 2026</span>
+    <span class="hero-pill">Kissimmee · Bradenton</span>
+    <span class="hero-pill">National 8GXMRS2</span>
+    <span class="hero-pill">Copa BPWK1R</span>
+  </div>
+</div>
+<div class="part-tabs">
+  <div class="part-tab active" onclick="showPart('p1')">Parte 1 — Kissimmee</div>
+  <div class="part-tab" onclick="showPart('p2')">Parte 2 — Bradenton</div>
+  <div class="part-tab" onclick="showPart('refs')">📋 Referências</div>
+</div>
+<div class="day-nav" id="nav-p1">
+  <button class="day-btn type-chegada active" onclick="showDay('d23','p1',this)">Sáb 23/05</button>
+  <button class="day-btn type-chegada" onclick="showDay('d24','p1',this)">Dom 24/05</button>
+  <button class="day-btn type-parque" onclick="showDay('d25','p1',this)">Seg 25/05 🦁</button>
+  <button class="day-btn type-compras" onclick="showDay('d26','p1',this)">Ter 26/05 🛍️</button>
+  <button class="day-btn type-livre" onclick="showDay('d27','p1',this)">Qua 27/05 🌳</button>
+  <button class="day-btn type-parque" onclick="showDay('d28','p1',this)">Qui 28/05 🏰</button>
+  <button class="day-btn type-viagem" onclick="showDay('d29','p1',this)">Sex 29/05 🚐</button>
+</div>
+<div class="day-nav" id="nav-p2" style="display:none">
+  <button class="day-btn type-praia active" onclick="showDay('d30','p2',this)">Sáb 30/05 🏖️</button>
+  <button class="day-btn type-praia" onclick="showDay('d31','p2',this)">Dom 31/05 🏖️</button>
+  <button class="day-btn type-viagem" onclick="showDay('d01','p2',this)">Seg 01/06 🌆</button>
+  <button class="day-btn type-praia" onclick="showDay('d02','p2',this)">Ter 02/06 🏖️</button>
+  <button class="day-btn type-viagem" onclick="showDay('d03','p2',this)">Qua 03/06 🧳</button>
+  <button class="day-btn type-pendente" onclick="showDay('d04','p2',this)">Qui 04/06 🏠</button>
+</div>
+<div class="content">
+
+<div class="day-section active" id="d23">
+<div class="day-card">
+  <div class="day-header hdr-chegada">
+    <div><div class="day-date-label">Sábado · 23/05/2026</div><div class="day-title">Chegada à Flórida</div></div>
+    <span class="day-badge bdg-chegada">Chegada</span>
+    <button class="reset-btn" id="reset-d23" onclick="resetDay('d23')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-chegada"><td class="t">13h33</td><td class="i">✈️</td><td class="d">Pouso em Tampa — Copa CM 393 <span class="st st-ok">Confirmado</span></td></tr>
+    <tr class="row-chegada"><td class="t">14h30</td><td class="i">🚐</td><td class="d">Retirada da Minivan · National Car Rental <span class="st st-ok">Confirmado</span><small>Cadeirinha incluída</small></td></tr>
+    <tr class="row-chegada"><td class="t">~15h30</td><td class="i">🛣️</td><td class="d">Viagem TPA → Kissimmee<small>~1h pela I-4 E</small></td></tr>
+    <tr class="row-chegada"><td class="t">16h+</td><td class="i">🏠</td><td class="d">Check-in · Summerville Resort, Casa 04 <span class="st st-ok">Confirmado</span><small>Self check-in por keypad · 3 suítes · piscina aquecida</small></td></tr>
+    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">Walmart ou Target — suprimentos básicos<small>US-192, ~15 min da casa</small></td></tr>
+    <tr class="row-livre"><td class="t">Noite</td><td class="i">🌟</td><td class="d">Noite em Orlando <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Escolha a atividade da noite:</div>
+    <div class="alt-options" id="alt-d23-noite">
+      <button class="alt-opt" onclick="selectAlt('d23-noite',0,this)">Disney Springs — entrada gratuita, jantar, lojas (~20 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d23-noite',1,this)">Old Town (Kissimmee) — calçadão retrô, pertinho da casa</button>
+      <button class="alt-opt" onclick="selectAlt('d23-noite',2,this)">Jantar em casa — descanso após voo longo</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="day-section" id="d24">
+<div class="day-card">
+  <div class="day-header hdr-chegada">
+    <div><div class="day-date-label">Domingo · 24/05/2026</div><div class="day-title">Buscar as irmãs · Descanso</div></div>
+    <span class="day-badge bdg-chegada">Logística</span>
+    <button class="reset-btn" id="reset-d24" onclick="resetDay('d24')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-chegada"><td class="t">~07h30</td><td class="i">🚐</td><td class="d">Ricardo sai de Kissimmee rumo ao TPA<small>~1h de carro</small></td></tr>
+    <tr class="row-chegada"><td class="t">09h28</td><td class="i">✈️</td><td class="d">Desirée e Fernanda pousam em Tampa <span class="st st-ok">Confirmado</span><small>AA 2781 · MIA → TPA</small></td></tr>
+    <tr class="row-pendente"><td class="t">Manhã</td><td class="i">❓</td><td class="d">Transporte das irmãs até Kissimmee <span class="st st-pend">Pendente</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Como as irmãs chegam a Kissimmee?</div>
+    <div class="alt-options" id="alt-d24-transp">
+      <button class="alt-opt" onclick="selectAlt('d24-transp',0,this)">Ricardo vai de carro buscar no TPA</button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',1,this)">Irmãs pegam Uber/Lyft por conta própria</button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',2,this)">Irmãs alugam carro próprio no TPA</button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',3,this)">A definir depois</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🦢</td><td class="d">Tarde de domingo — sugestão: Lake Eola <span class="st st-flex">Flexível</span><small>Domingo à tarde tem feirinha local + pôr do sol urbano · ótimo dia para esse passeio</small></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Tarde de domingo (opcional, se houver disposição):</div>
+    <div class="alt-options" id="alt-d24-tarde">
+      <button class="alt-opt" onclick="selectAlt('d24-tarde',0,this)">Descanso total em casa — piscina (recomendado após viagem)</button>
+      <button class="alt-opt" onclick="selectAlt('d24-tarde',1,this)">Lake Eola — feirinha de domingo + pôr do sol + jantar no The Osprey Tavern</button>
+      <button class="alt-opt" onclick="selectAlt('d24-tarde',2,this)">Disney Springs leve no fim de tarde</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="day-section" id="d25">
+<div class="day-card">
+  <div class="day-header hdr-parque">
+    <div><div class="day-date-label">Segunda · 25/05/2026</div><div class="day-title">🦁 Animal Kingdom</div></div>
+    <span class="day-badge bdg-parque">Parque Disney</span>
+  </div>
+  <table>
+    <tr class="row-parque"><td class="t">Cedo</td><td class="i">🚐</td><td class="d">Saída para o parque — Ricardo, Aline e Gui <span class="st st-ok">Confirmado</span><small>Sem os primos · ritmo próprio</small></td></tr>
+    <tr class="row-parque"><td class="t">Abertura</td><td class="i">🦒</td><td class="d">Kilimanjaro Safaris — PRIORIDADE MÁXIMA<small>Animais mais ativos logo cedo</small></td></tr>
+    <tr class="row-parque"><td class="t">Manhã</td><td class="i">🛸</td><td class="d">Na'vi River Journey · Pandora<small>Gui: 101 cm · com calçado passa nos de 102 cm</small></td></tr>
+    <tr class="row-parque"><td class="t">Manhã</td><td class="i">🎠</td><td class="d">Brinquedos infantis · TriceraTop Spin · The Boneyard<small>Festival of the Lion King</small></td></tr>
+    <tr class="row-compras"><td class="t">Paralelo</td><td class="i">🛍️</td><td class="d">Desirée e Fernanda ficam com a Minivan<small>Compras na US-192</small></td></tr>
+    <tr class="row-parque"><td class="t">Tarde</td><td class="i">🎭</td><td class="d">Shows e atrações ao ritmo do Gui<small>Sair sem pressão quando cansar</small></td></tr>
+    <tr class="row-note"><td colspan="3">📱 Lightning Lane: serviço do Marcello coordena. Confirmar se cobre o AK.</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d26">
+<div class="day-card">
+  <div class="day-header hdr-compras">
+    <div><div class="day-date-label">Terça · 26/05/2026</div><div class="day-title">🛍️ Compras na US-192</div></div>
+    <span class="day-badge bdg-compras">Compras</span>
+    <button class="reset-btn" id="reset-d26" onclick="resetDay('d26')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-compras"><td class="t">Manhã</td><td class="i">🏬</td><td class="d">Ross · Marshalls · Burlington<small>The Loop e plazas da US-192</small></td></tr>
+    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">Dollar Tree · Target · Walmart · Old Navy</td></tr>
+    <tr class="row-chegada"><td class="t">Casa</td><td class="i">📦</td><td class="d">Receber entregas Amazon <span class="st st-flex">Janela ideal</span><small>25–27/05 · pacotes na porta</small></td></tr>
+    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Jantar do dia 26:</div>
+    <div class="alt-options" id="alt-d26-jantar">
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',0,this)">Em casa — cozinhar ou delivery</button>
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',1,this)">Restaurante casual na US-192</button>
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',2,this)">Texas Roadhouse (clássico americano)</button>
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',3,this)">Olive Garden (fácil com criança)</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="day-section" id="d27">
+<div class="day-card">
+  <div class="day-header hdr-livre">
+    <div><div class="day-date-label">Quarta · 27/05/2026</div><div class="day-title">🌳 Lazer em Orlando</div></div>
+    <span class="day-badge bdg-livre">Lazer</span>
+    <button class="reset-btn" id="reset-d27" onclick="resetDay('d27')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Manhã</td><td class="i">😴</td><td class="d">Manhã livre — descanso antes do Magic Kingdom<small>Dormir mais, piscina na casa</small></td></tr>
+    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🗺️</td><td class="d">Passeio em Orlando <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Escolha a atividade da tarde:</div>
+    <div class="alt-options" id="alt-d27-tarde">
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',0,this)">Lake Eola Park — lago, cisnes, coreto (gratuito, ~40 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',1,this)">Celebration — cidade-cenário Disney, sorvete na Kilwins (charmosa, tranquila)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',2,this)">Disney Boardwalk — calçadão à beira do lago, barcos grátis p/ resorts (~16h)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',3,this)">Disney Springs — compras, lojas Disney (~20 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',4,this)">Winter Park — Park Avenue, Scenic Boat Tour, lojas charmosas (~25 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',5,this)">ICON Park (externo gratuito) + I-Drive</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',6,this)">Ficar em Kissimmee — piscina + descanso total</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Noite</td><td class="i">🌃</td><td class="d">Noite de quarta <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Noite (quarta tem desfile de carros antigos no Old Town!):</div>
+    <div class="alt-options" id="alt-d27-noite">
+      <button class="alt-opt" onclick="selectAlt('d27-noite',0,this)">Old Town (Kissimmee) — calçadão retrô + desfile de carros antigos (quarta à noite!)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-noite',1,this)">Jantar perto do passeio escolhido para a tarde</button>
+      <button class="alt-opt" onclick="selectAlt('d27-noite',2,this)">Voltar para casa e descansar antes do Magic Kingdom</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-note"><td colspan="3">💡 Dia 27 é quarta — Old Town tem desfile de carros antigos à noite. Fica em Kissimmee, pertinho da casa. Boa pedida para fechar o dia.</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d28">
+<div class="day-card">
+  <div class="day-header hdr-parque">
+    <div><div class="day-date-label">Quinta · 28/05/2026</div><div class="day-title">🏰 Magic Kingdom</div></div>
+    <span class="day-badge bdg-parque">Parque Disney</span>
+  </div>
+  <table>
+    <tr class="row-chegada"><td class="t">Cedo</td><td class="i">🚐</td><td class="d">Irmãs fazem drop-off no TTC<small>Ficam com a Minivan</small></td></tr>
+    <tr class="row-parque"><td class="t">Abertura</td><td class="i">👨‍👩‍👧‍👦</td><td class="d">Encontro com Marcello, Gabi, Thomas e Nico<small>Combinar ponto de encontro via WhatsApp</small></td></tr>
+    <tr class="row-parque"><td class="t">Manhã</td><td class="i">🎠</td><td class="d">Fantasyland — Peter Pan, Small World, Dumbo, Carrossel<small>Gui é a estrela!</small></td></tr>
+    <tr class="row-parque"><td class="t">Manhã</td><td class="i">⛏️</td><td class="d">Big Thunder · Haunted Mansion<small>Rider Switch para adultos</small></td></tr>
+    <tr class="row-parque"><td class="t">Tarde</td><td class="i">🎺</td><td class="d">Festival of Fantasy Parade</td></tr>
+    <tr class="row-parque"><td class="t">Noite</td><td class="i">🎆</td><td class="d">Happily Ever After (fogos) <span class="st st-flex">Opcional</span><small>Se o Gui aguentar</small></td></tr>
+    <tr class="row-chegada"><td class="t">Saída</td><td class="i">🚐</td><td class="d">Irmãs buscam o grupo no TTC</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d29">
+<div class="day-card">
+  <div class="day-header hdr-viagem">
+    <div><div class="day-date-label">Sexta · 29/05/2026</div><div class="day-title">🚐 Check-out · Tampa · Bradenton</div></div>
+    <span class="day-badge bdg-viagem">Viagem</span>
+    <button class="reset-btn" id="reset-d29" onclick="resetDay('d29')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-viagem"><td class="t">Até 10h</td><td class="i">🧳</td><td class="d">Check-out Summerville Resort <span class="st st-ok">Fixo</span></td></tr>
+    <tr class="row-viagem"><td class="t">~10h</td><td class="i">🛣️</td><td class="d">Saída Kissimmee → Tampa<small>~1h pela I-4 W</small></td></tr>
+    <tr class="row-livre"><td class="t">~11h–14h</td><td class="i">🌆</td><td class="d">Parada em Tampa <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">O que fazer em Tampa no caminho?</div>
+    <div class="alt-options" id="alt-d29-tampa">
+      <button class="alt-opt" onclick="selectAlt('d29-tampa',0,this)">Armature Works + The Riverwalk — almoço e passeio à beira-rio</button>
+      <button class="alt-opt" onclick="selectAlt('d29-tampa',1,this)">Ybor City — bairro cubano, almoço no Columbia Restaurant</button>
+      <button class="alt-opt" onclick="selectAlt('d29-tampa',2,this)">Hyde Park Village — bairro charmoso, lojas</button>
+      <button class="alt-opt" onclick="selectAlt('d29-tampa',3,this)">Parada rápida no Walmart/Target + seguir</button>
+      <button class="alt-opt" onclick="selectAlt('d29-tampa',4,this)">Seguir direto para Bradenton</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-viagem"><td class="t">~14h30</td><td class="i">🛣️</td><td class="d">Saída Tampa → Bradenton<small>~45 min</small></td></tr>
+    <tr class="row-chegada"><td class="t">16h+</td><td class="i">🏠</td><td class="d">Check-in · Casa Bradenton <span class="st st-ok">Confirmado</span><small>Sammy · 5 quartos · piscina 90°F</small></td></tr>
+    <tr class="row-note"><td colspan="3">💡 Daniel e Carol chegam de FLL — provavelmente já na casa quando vocês chegarem.</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d30">
+<div class="day-card">
+  <div class="day-header hdr-praia">
+    <div><div class="day-date-label">Sábado · 30/05/2026</div><div class="day-title">🏖️ Anna Maria Island · BBQ em família</div></div>
+    <span class="day-badge bdg-praia">Praia + Casa</span>
+    <button class="reset-btn" id="reset-d30" onclick="resetDay('d30')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-praia"><td class="t">~09h</td><td class="i">🚗</td><td class="d">Saída para Anna Maria Island (2 carros)<small>~20 min · água calma e quente, ótima p/ o Gui</small></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Qual praia em Anna Maria?</div>
+    <div class="alt-options" id="alt-d30-praia">
+      <button class="alt-opt" onclick="selectAlt('d30-praia',0,this)">Coquina Beach — boa estrutura, popular com famílias</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',1,this)">Holmes Beach — mais tranquila</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',2,this)">Manatee Beach — próximo, bem equipado</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',3,this)">Bean Point — ponta norte, mais selvagem</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-praia"><td class="t">09h–12h</td><td class="i">🌊</td><td class="d">Manhã na praia<small>Guarda-sóis, cadeiras e carrinho na casa</small></td></tr>
+    <tr class="row-praia"><td class="t">~12h</td><td class="i">🍽️</td><td class="d">Almoço <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Almoço do dia 30:</div>
+    <div class="alt-options" id="alt-d30-almoco">
+      <button class="alt-opt" onclick="selectAlt('d30-almoco',0,this)">Wicked Cantina — clima de praia, Anna Maria</button>
+      <button class="alt-opt" onclick="selectAlt('d30-almoco',1,this)">Lanche na praia + almoço em casa</button>
+      <button class="alt-opt" onclick="selectAlt('d30-almoco',2,this)">Rod & Reel Pier — casual à beira-mar</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-casa"><td class="t">Tarde</td><td class="i">🏊</td><td class="d">Casa — piscina aquecida e hot tub<small>Sala de jogos: arcades, bilhar, pebolim</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🔥</td><td class="d">1º grande BBQ da família reunida!<small>Churrasqueira + fire pit + bar ao ar livre</small></td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d31">
+<div class="day-card">
+  <div class="day-header hdr-praia">
+    <div><div class="day-date-label">Domingo · 31/05/2026</div><div class="day-title">🏖️ Praia · Passeio · Jantar beira-mar</div></div>
+    <span class="day-badge bdg-praia">Praia + Passeio</span>
+    <button class="reset-btn" id="reset-d31" onclick="resetDay('d31')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-praia"><td class="t">~09h</td><td class="i">🌊</td><td class="d">Anna Maria Island — manhã na praia</td></tr>
+    <tr class="row-praia"><td class="t">~12h</td><td class="i">🍽️</td><td class="d">Almoço em Anna Maria <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Almoço em Anna Maria Island:</div>
+    <div class="alt-options" id="alt-d31-almoco">
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',0,this)">Wicked Cantina — vista para o golfo</button>
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',1,this)">Rod & Reel Pier — sobre a água</button>
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',2,this)">Pine Avenue — cafés e bistrôs</button>
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',3,this)">Voltar para casa</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🏙️</td><td class="d">Passeio pela tarde <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Atividade da tarde:</div>
+    <div class="alt-options" id="alt-d31-tarde">
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',0,this)">Bradenton Riverwalk — parquinho para o Gui</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',1,this)">Village of the Arts — bairro artístico</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',2,this)">Casa — piscina e descanso</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',3,this)">Explorar mais Anna Maria — Pine Avenue</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Jantar do dia 31:</div>
+    <div class="alt-options" id="alt-d31-jantar">
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',0,this)">Pier 22 — à beira do Rio Manatee</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',1,this)">Riverhouse Waterfront — culinária costeira</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',2,this)">Oak & Stone — pizza artesanal</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',3,this)">Em casa — churrasqueira</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="day-section" id="d01">
+<div class="day-card">
+  <div class="day-header hdr-viagem">
+    <div><div class="day-date-label">Segunda · 01/06/2026</div><div class="day-title">🌆 Tampa em grupo</div></div>
+    <span class="day-badge bdg-viagem">Passeio</span>
+    <button class="reset-btn" id="reset-d01" onclick="resetDay('d01')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-praia"><td class="t">Manhã</td><td class="i">🏊</td><td class="d">Manhã livre — praia ou piscina em casa</td></tr>
+    <tr class="row-viagem"><td class="t">~13h</td><td class="i">🚗</td><td class="d">Saída para Tampa — grupo todo (2 carros)<small>~1h · atenção p/ Ricardo Brum: evitar longas caminhadas</small></td></tr>
+    <tr class="row-livre"><td class="t">~14h</td><td class="i">🍺</td><td class="d">Almoço em Tampa <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Almoço em Tampa:</div>
+    <div class="alt-options" id="alt-d01-almoco">
+      <button class="alt-opt" onclick="selectAlt('d01-almoco',0,this)">Armature Works — mercado gastronômico à beira-rio</button>
+      <button class="alt-opt" onclick="selectAlt('d01-almoco',1,this)">Columbia Restaurant (Ybor City) — cubano histórico</button>
+      <button class="alt-opt" onclick="selectAlt('d01-almoco',2,this)">Hyde Park Village — restaurantes variados</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🚶</td><td class="d">Passeio em Tampa <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Atividade da tarde:</div>
+    <div class="alt-options" id="alt-d01-tarde">
+      <button class="alt-opt" onclick="selectAlt('d01-tarde',0,this)">The Riverwalk — beira-rio, skyline</button>
+      <button class="alt-opt" onclick="selectAlt('d01-tarde',1,this)">Ybor City — lojas vintage, murais</button>
+      <button class="alt-opt" onclick="selectAlt('d01-tarde',2,this)">International Plaza — compras premium</button>
+      <button class="alt-opt" onclick="selectAlt('d01-tarde',3,this)">Hyde Park Village — lojas e cafés</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar antes de voltar <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Jantar em Tampa ou voltar?</div>
+    <div class="alt-options" id="alt-d01-jantar">
+      <button class="alt-opt" onclick="selectAlt('d01-jantar',0,this)">Jantar em Ybor City — cubano</button>
+      <button class="alt-opt" onclick="selectAlt('d01-jantar',1,this)">Jantar em Hyde Park Village</button>
+      <button class="alt-opt" onclick="selectAlt('d01-jantar',2,this)">Voltar para Bradenton e jantar em casa</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="day-section" id="d02">
+<div class="day-card">
+  <div class="day-header hdr-praia">
+    <div><div class="day-date-label">Terça · 02/06/2026</div><div class="day-title">🏖️ Última praia · Tarde em casa</div></div>
+    <span class="day-badge bdg-praia">Praia + Casa</span>
+    <button class="reset-btn" id="reset-d02" onclick="resetDay('d02')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-praia"><td class="t">~09h</td><td class="i">🌊</td><td class="d">Anna Maria Island — manhã na praia<small>Último dia de praia completo</small></td></tr>
+    <tr class="row-praia"><td class="t">~12h</td><td class="i">🍽️</td><td class="d">Almoço <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Almoço do dia 02:</div>
+    <div class="alt-options" id="alt-d02-almoco">
+      <button class="alt-opt" onclick="selectAlt('d02-almoco',0,this)">Mr. & Mrs. Crab — frutos do mar casual</button>
+      <button class="alt-opt" onclick="selectAlt('d02-almoco',1,this)">Wicked Cantina — despedida de Anna Maria</button>
+      <button class="alt-opt" onclick="selectAlt('d02-almoco',2,this)">Voltar para casa</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-casa"><td class="t">Tarde</td><td class="i">🎱</td><td class="d">Tarde em casa — sala de jogos e piscina</td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🔥</td><td class="d">Jantar de despedida <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Jantar de despedida (última noite completa de Ricardo, Aline e Gui):</div>
+    <div class="alt-options" id="alt-d02-jantar">
+      <button class="alt-opt" onclick="selectAlt('d02-jantar',0,this)">BBQ grandioso no quintal 🔥</button>
+      <button class="alt-opt" onclick="selectAlt('d02-jantar',1,this)">Pier 22 — jantar especial à beira-rio</button>
+      <button class="alt-opt" onclick="selectAlt('d02-jantar',2,this)">Oak & Stone — pizza artesanal</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-note"><td colspan="3">🌟 Última noite completa de Ricardo, Aline e Gui com a família. Fazer valer!</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d03">
+<div class="day-card">
+  <div class="day-header hdr-viagem">
+    <div><div class="day-date-label">Quarta · 03/06/2026</div><div class="day-title">🧳 Último dia de Ricardo · Partida às 02h</div></div>
+    <span class="day-badge bdg-viagem">Partida</span>
+    <button class="reset-btn" id="reset-d03" onclick="resetDay('d03')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-praia"><td class="t">Manhã</td><td class="i">🌊</td><td class="d">Manhã <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Última manhã:</div>
+    <div class="alt-options" id="alt-d03-manha">
+      <button class="alt-opt" onclick="selectAlt('d03-manha',0,this)">Última ida à praia de Anna Maria</button>
+      <button class="alt-opt" onclick="selectAlt('d03-manha',1,this)">Piscina em casa + hot tub</button>
+      <button class="alt-opt" onclick="selectAlt('d03-manha',2,this)">Passeio leve por Bradenton + comprinhas</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🧺</td><td class="d">Arrumar as malas + descanso</td></tr>
+    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar de encerramento <span class="st st-flex">Flexível</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Jantar de encerramento:</div>
+    <div class="alt-options" id="alt-d03-jantar">
+      <button class="alt-opt" onclick="selectAlt('d03-jantar',0,this)">Oak & Stone — pizza artesanal</button>
+      <button class="alt-opt" onclick="selectAlt('d03-jantar',1,this)">Riverhouse Waterfront — culinária costeira</button>
+      <button class="alt-opt" onclick="selectAlt('d03-jantar',2,this)">Em casa — refeição especial no quintal</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-casa"><td class="t">~22h</td><td class="i">😴</td><td class="d">Ricardo, Aline e Gui dormem cedo</td></tr>
+    <tr class="row-viagem"><td class="t">~02h00</td><td class="i">🚐</td><td class="d">Saída para Tampa <span class="st st-ok">Fixo</span><small>Devolução Minivan no TPA · SkyConnect gratuito</small></td></tr>
+    <tr class="row-viagem"><td class="t">05h23</td><td class="i">✈️</td><td class="d">Embarque · Copa CM 782 <span class="st st-ok">Confirmado</span><small>BPWK1R · Classe Executiva · chega POA 05/06 às 00h20</small></td></tr>
+  </table>
+</div>
+</div>
+
+<div class="day-section" id="d04">
+<div class="day-card">
+  <div class="day-header hdr-pendente">
+    <div><div class="day-date-label">Quinta · 04/06/2026</div><div class="day-title">🏠 Check-out · Despedidas</div></div>
+    <span class="day-badge bdg-pendente">Check-out</span>
+    <button class="reset-btn" id="reset-d04" onclick="resetDay('d04')">↺ Resetar</button>
+  </div>
+  <table>
+    <tr class="row-chegada"><td class="t">Até 10h</td><td class="i">🧳</td><td class="d">Check-out da casa (Sammy) <span class="st st-ok">Fixo</span></td></tr>
+    <tr class="row-pendente"><td class="t">Dia todo</td><td class="i">✈️</td><td class="d">Desirée e Fernanda — voo AA 2798 às 19h39 <span class="st st-pend">A definir</span></td></tr>
+  </table>
+  <div class="alt-block">
+    <div class="alt-label">Plano das irmãs após o check-out:</div>
+    <div class="alt-options" id="alt-d04-irmas">
+      <button class="alt-opt" onclick="selectAlt('d04-irmas',0,this)">Ficar em Bradenton/Anna Maria até hora do aeroporto</button>
+      <button class="alt-opt" onclick="selectAlt('d04-irmas',1,this)">Ir a Tampa — International Mall + jantar + TPA</button>
+      <button class="alt-opt" onclick="selectAlt('d04-irmas',2,this)">Tampa cedo — Ybor City / Hyde Park</button>
+      <button class="alt-opt" onclick="selectAlt('d04-irmas',3,this)">A definir depois</button>
+    </div>
+  </div>
+  <table>
+    <tr class="row-livre"><td class="t">Dia todo</td><td class="i">🚗</td><td class="d">Daniel e Carol — ficam mais 2 noites (voo 06/06 de FLL)</td></tr>
+    <tr class="row-pendente"><td class="t">—</td><td class="i">👴</td><td class="d">Ricardo Brum e Isabel — retorno a definir <span class="st st-pend">Pendente</span></td></tr>
+  </table>
+</div>
+</div>
+
+<div class="refs-section" id="refs-section">
+<div class="refs">
+  <h2>📋 Informações úteis da viagem</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>✈️ Voos — Ricardo, Aline e Gui</h3>
+      <ul>
+        <li><strong>Ida:</strong> 23/05 · pouso TPA 13h33</li>
+        <li><strong>Volta:</strong> 04/06 · CM 782 às 05h23</li>
+        <li>Copa Airlines · Classe Executiva</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>✈️ Voos — Desirée e Fernanda</h3>
+      <ul>
+        <li><strong>Ida:</strong> 24/05 · TPA 09h28</li>
+        <li><strong>Volta:</strong> 04/06 · TPA 19h39</li>
+      </ul><br>
+      <h3>✈️ Daniel, Carol, Pai e Isabel</h3>
+      <ul>
+        <li><strong>Ida:</strong> 29/05 · chegam FLL 06h20</li>
+        <li><strong>Volta:</strong> 06/06 · FLL 08h20</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>🏠 Kissimmee (23–29/05)</h3>
+      <ul>
+        <li>Summerville Resort, Casa 04</li>
+        <li>Anfitrião: Marcelo &amp; Stephanie</li>
+        <li>Check-in: 23/05 16h · Check-out: 29/05 10h</li>
+        <li>3 suítes · piscina aquecida</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>🏠 Bradenton (29/05–04/06)</h3>
+      <ul>
+        <li>Oásis de diversão em família · Sammy</li>
+        <li>Check-in: 29/05 16h · Check-out: 04/06 10h</li>
+        <li>5 quartos · casa térrea · piscina 90°F</li>
+        <li>Sala de jogos · hot tub · BBQ</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>🚐 Carros</h3>
+      <ul>
+        <li><strong>Minivan:</strong> National · TPA (Ricardo)</li>
+        <li>Retirada 23/05 14h30 · Devolução 04/06 03h00</li>
+        <li><strong>Sienna:</strong> Thrifty · FLL (Pai/Daniel)</li>
+        <li>29/05 a 06/06 · 8 lugares</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>🎢 Disney</h3>
+      <ul>
+        <li>3x 2-Day Base Ticket</li>
+        <li>Animal Kingdom: 25/05</li>
+        <li>Magic Kingdom: 28/05 (com Marcello)</li>
+        <li>Lightning Lane: serviço do Marcello</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>🌳 Passeios gratuitos em Orlando</h3>
+      <ul>
+        <li><strong>Lake Eola</strong> — melhor domingo à tarde (feirinha)</li>
+        <li><strong>Disney Springs</strong> — fim de tarde, qualquer dia</li>
+        <li><strong>Disney Boardwalk</strong> — chegar ~16h</li>
+        <li><strong>Celebration</strong> — cidade-cenário, sorvete Kilwins</li>
+        <li><strong>Old Town</strong> (Kissimmee) — quarta/sábado à noite, carros antigos</li>
+        <li><strong>Winter Park</strong> — Park Avenue, Scenic Boat Tour</li>
+        <li><strong>ICON Park</strong> — I-Drive, qualquer hora</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>🍽️ Restaurantes Bradenton</h3>
+      <ul>
+        <li><strong>Pier 22</strong> — beira-rio, jantar especial</li>
+        <li><strong>Riverhouse</strong> — culinária costeira</li>
+        <li><strong>Oak &amp; Stone</strong> — pizza e cervejaria</li>
+        <li><strong>Mr. &amp; Mrs. Crab</strong> — frutos do mar</li>
+        <li><strong>Wicked Cantina</strong> — Anna Maria, praia</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+<div class="footer">v5 · maio 2026 · Flórida 2026 — Família Marantes &amp; Brum · Roteiro (orçamento em arquivo separado)</div>
+
+<script>
+const STORAGE_KEY = 'florida2026_roteiro_v5';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { state = {}; }
+function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){} }
+let currentPart = 'p1';
+let currentDay = { p1: 'd23', p2: 'd30' };
+function showPart(part) {
+  currentPart = part;
+  document.querySelectorAll('.part-tab').forEach((t,i) => { t.classList.toggle('active', ['p1','p2','refs'][i] === part); });
+  document.getElementById('nav-p1').style.display = (part === 'p1') ? 'flex' : 'none';
+  document.getElementById('nav-p2').style.display = (part === 'p2') ? 'flex' : 'none';
+  document.querySelectorAll('.day-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.refs-section').forEach(s => s.classList.remove('active'));
+  if (part === 'refs') { document.getElementById('refs-section').classList.add('active'); }
+  else {
+    document.getElementById(currentDay[part]).classList.add('active');
+    const nav = document.getElementById('nav-' + part);
+    nav.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+    const dayId = currentDay[part];
+    nav.querySelectorAll('.day-btn').forEach(b => { if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + dayId + "'")) b.classList.add('active'); });
+  }
+}
+function showDay(dayId, part, btn) {
+  document.querySelectorAll('.day-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(dayId).classList.add('active');
+  currentDay[part] = dayId;
+  const nav = document.getElementById('nav-' + part);
+  nav.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function selectAlt(key, idx, btn) {
+  const container = document.getElementById('alt-' + key);
+  container.querySelectorAll('.alt-opt').forEach((b,i) => b.classList.toggle('selected', i === idx));
+  state[key] = idx;
+  saveState();
+  const dayPrefix = key.split('-')[0];
+  const resetBtn = document.getElementById('reset-' + dayPrefix);
+  if (resetBtn) resetBtn.classList.add('visible');
+}
+function resetDay(dayPrefix) {
+  Object.keys(state).forEach(k => { if (k.startsWith(dayPrefix + '-')) delete state[k]; });
+  saveState();
+  document.getElementById(dayPrefix).querySelectorAll('.alt-opt').forEach(b => b.classList.remove('selected'));
+  const resetBtn = document.getElementById('reset-' + dayPrefix);
+  if (resetBtn) resetBtn.classList.remove('visible');
+}
+function restoreState() {
+  Object.keys(state).forEach(key => {
+    const idx = state[key];
+    const container = document.getElementById('alt-' + key);
+    if (!container) return;
+    const opts = container.querySelectorAll('.alt-opt');
+    if (opts[idx]) opts[idx].classList.add('selected');
+    const dayPrefix = key.split('-')[0];
+    const resetBtn = document.getElementById('reset-' + dayPrefix);
+    if (resetBtn) resetBtn.classList.add('visible');
+  });
+}
+restoreState();
+</script>
+</body>
+</html>
