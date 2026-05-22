@@ -12,8 +12,8 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f7; color: #
 .hero .subtitle { font-size: 13px; opacity: 0.7; margin-bottom: 14px; }
 .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .hero-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 99px; padding: 3px 12px; font-size: 12px; }
-.part-tabs { background: #1a1a2e; display: flex; padding: 0 16px; border-bottom: 2px solid rgba(255,255,255,0.1); }
-.part-tab { padding: 10px 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.5); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s; }
+.part-tabs { background: #1a1a2e; display: flex; padding: 0 16px; border-bottom: 2px solid rgba(255,255,255,0.1); overflow-x: auto; }
+.part-tab { padding: 10px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s; white-space: nowrap; }
 .part-tab.active { color: white; border-bottom-color: #7F77DD; }
 .day-nav { background: white; padding: 12px 16px; display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid #e8ecf0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 .day-btn { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: all .18s; white-space: nowrap; }
@@ -47,6 +47,7 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 .st-ok  { background: #d4f5e5; color: #085041; }
 .st-flex{ background: #e8e7fd; color: #3c3489; }
 .st-pend{ background: #fff0c0; color: #7a5500; }
+.st-casa{ background: #f3d9fb; color: #5a1f8a; }
 .row-chegada  { background: #f0faf5; }
 .row-parque   { background: #f2f0fd; }
 .row-compras  { background: #fef9ec; }
@@ -79,8 +80,8 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 .bdg-pendente { background: #d3d1c7; color: #444441; }
 .bdg-praia    { background: #7dd3ee; color: #0a4a6b; }
 .bdg-casa     { background: #d9b4f7; color: #5a1f8a; }
-.refs-section { display: none; }
-.refs-section.active { display: block; }
+.refs-section, .casas-section { display: none; }
+.refs-section.active, .casas-section.active { display: block; }
 .refs { background: white; border-radius: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); padding: 22px 24px; }
 .refs h2 { font-size: 15px; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f0f2f5; }
 .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -90,6 +91,28 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 .ref-card li { font-size: 12.5px; color: #333; line-height: 1.7; }
 .ref-card li strong { color: #1a1a2e; }
 .ref-card a { color: #185FA5; }
+.casa-card { background: white; border-radius: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); margin-bottom: 18px; overflow: hidden; }
+.casa-header { padding: 16px 20px; }
+.casa-header h2 { font-size: 19px; font-weight: 700; margin-bottom: 3px; }
+.casa-header .casa-sub { font-size: 12px; opacity: .7; }
+.casa-maps { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.6); padding: 5px 12px; border-radius: 8px; text-decoration: none; color: inherit; border: 1px solid rgba(0,0,0,0.1); }
+.casa-body { padding: 6px 0 10px; }
+.casa-block { padding: 12px 20px; border-top: 1px solid #f0f2f5; }
+.casa-block h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #888; margin-bottom: 8px; }
+.casa-block ul { list-style: none; }
+.casa-block li { font-size: 13px; color: #333; line-height: 1.65; padding-left: 16px; position: relative; }
+.casa-block li::before { content: '•'; position: absolute; left: 2px; color: #aaa; }
+.casa-block li strong { color: #1a1a2e; }
+.codes { background: #fff8e6; border: 1px solid #f0e0b0; border-radius: 10px; padding: 12px 16px; margin: 10px 20px; }
+.codes h4 { color: #7a5500; }
+.codes .code-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px dashed #f0e0b0; }
+.codes .code-row:last-child { border-bottom: none; }
+.codes .code-val { font-family: monospace; font-weight: 700; font-size: 14px; color: #1a1a2e; background: white; padding: 1px 8px; border-radius: 5px; }
+.codes .privacy-warn { font-size: 11px; color: #a06000; margin-top: 8px; font-style: italic; }
+.wifi-box { background: #e8f4fd; border: 1px solid #b8dcf5; border-radius: 10px; padding: 12px 16px; margin: 10px 20px; }
+.wifi-box h4 { color: #0c447c; }
+.wifi-box .code-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+.wifi-box .code-val { font-family: monospace; font-weight: 700; color: #1a1a2e; }
 @media(max-width:600px){ .ref-grid{ grid-template-columns:1fr; } .hero h1{font-size:20px;} }
 .footer { text-align: center; font-size: 11px; color: #aaa; padding: 16px; }
 </style>
@@ -108,6 +131,7 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 <div class="part-tabs">
   <div class="part-tab active" onclick="showPart('p1')">Parte 1 — Kissimmee</div>
   <div class="part-tab" onclick="showPart('p2')">Parte 2 — Bradenton</div>
+  <div class="part-tab" onclick="showPart('casas')">🏠 Casas</div>
   <div class="part-tab" onclick="showPart('refs')">📋 Referências</div>
 </div>
 <div class="day-nav" id="nav-p1">
@@ -122,7 +146,7 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 <div class="day-nav" id="nav-p2" style="display:none">
   <button class="day-btn type-praia active" onclick="showDay('d30','p2',this)">Sáb 30/05 🏖️</button>
   <button class="day-btn type-praia" onclick="showDay('d31','p2',this)">Dom 31/05 🏖️</button>
-  <button class="day-btn type-viagem" onclick="showDay('d01','p2',this)">Seg 01/06 🌆</button>
+  <button class="day-btn type-compras" onclick="showDay('d01','p2',this)">Seg 01/06 🎣</button>
   <button class="day-btn type-praia" onclick="showDay('d02','p2',this)">Ter 02/06 🏖️</button>
   <button class="day-btn type-viagem" onclick="showDay('d03','p2',this)">Qua 03/06 🧳</button>
   <button class="day-btn type-pendente" onclick="showDay('d04','p2',this)">Qui 04/06 🏠</button>
@@ -140,16 +164,16 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
     <tr class="row-chegada"><td class="t">13h33</td><td class="i">✈️</td><td class="d">Pouso em Tampa — Copa CM 393 <span class="st st-ok">Confirmado</span></td></tr>
     <tr class="row-chegada"><td class="t">14h30</td><td class="i">🚐</td><td class="d">Retirada da Minivan · National Car Rental <span class="st st-ok">Confirmado</span><small>Cadeirinha incluída</small></td></tr>
     <tr class="row-chegada"><td class="t">~15h30</td><td class="i">🛣️</td><td class="d">Viagem TPA → Kissimmee<small>~1h pela I-4 E</small></td></tr>
-    <tr class="row-chegada"><td class="t">16h+</td><td class="i">🏠</td><td class="d">Check-in · Summerville Resort, Casa 04 <span class="st st-ok">Confirmado</span><small>Self check-in por keypad · 3 suítes · piscina aquecida</small></td></tr>
-    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">Walmart ou Target — suprimentos básicos<small>US-192, ~15 min da casa</small></td></tr>
-    <tr class="row-livre"><td class="t">Noite</td><td class="i">🌟</td><td class="d">Noite em Orlando <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-chegada"><td class="t">16h+</td><td class="i">🏠</td><td class="d">Check-in · Summerville Resort, Casa 04 <span class="st st-ok">Confirmado</span><small>7595 Sunflower Circle · self check-in (ver aba Casas)</small></td></tr>
+    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">DIA DE ABASTECIMENTO — Walmart ou Target <span class="st st-ok">Importante</span><small>Carnes, massas, molhos, ovos, bacon, pães, lanches p/ parques, bebidas · base das refeições em casa</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar em casa <span class="st st-casa">Em casa</span><small>Refeição leve após o voo · cozinha completa na casa</small></td></tr>
   </table>
   <div class="alt-block">
-    <div class="alt-label">Escolha a atividade da noite:</div>
+    <div class="alt-label">Se preferirem sair (cansaço de viagem):</div>
     <div class="alt-options" id="alt-d23-noite">
-      <button class="alt-opt" onclick="selectAlt('d23-noite',0,this)">Disney Springs — entrada gratuita, jantar, lojas (~20 min)</button>
-      <button class="alt-opt" onclick="selectAlt('d23-noite',1,this)">Old Town (Kissimmee) — calçadão retrô, pertinho da casa</button>
-      <button class="alt-opt" onclick="selectAlt('d23-noite',2,this)">Jantar em casa — descanso após voo longo</button>
+      <button class="alt-opt" onclick="selectAlt('d23-noite',0,this)">Jantar em casa — leve, após o voo (padrão)</button>
+      <button class="alt-opt" onclick="selectAlt('d23-noite',1,this)">Disney Springs — entrada gratuita, jantar fora, lojas (~20 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d23-noite',2,this)">Old Town (Kissimmee) — calçadão retrô, pertinho da casa</button>
     </div>
   </div>
 </div>
@@ -158,35 +182,40 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 <div class="day-section" id="d24">
 <div class="day-card">
   <div class="day-header hdr-chegada">
-    <div><div class="day-date-label">Domingo · 24/05/2026</div><div class="day-title">Buscar as irmãs · Descanso</div></div>
+    <div><div class="day-date-label">Domingo · 24/05/2026</div><div class="day-title">Chegada das irmãs · Lake Eola</div></div>
     <span class="day-badge bdg-chegada">Logística</span>
     <button class="reset-btn" id="reset-d24" onclick="resetDay('d24')">↺ Resetar</button>
   </div>
   <table>
-    <tr class="row-chegada"><td class="t">~07h30</td><td class="i">🚐</td><td class="d">Ricardo sai de Kissimmee rumo ao TPA<small>~1h de carro</small></td></tr>
     <tr class="row-chegada"><td class="t">09h28</td><td class="i">✈️</td><td class="d">Desirée e Fernanda pousam em Tampa <span class="st st-ok">Confirmado</span><small>AA 2781 · MIA → TPA</small></td></tr>
-    <tr class="row-pendente"><td class="t">Manhã</td><td class="i">❓</td><td class="d">Transporte das irmãs até Kissimmee <span class="st st-pend">Pendente</span></td></tr>
+    <tr class="row-pendente"><td class="t">Manhã</td><td class="i">🚐</td><td class="d">Transporte das irmãs até Kissimmee <span class="st st-pend">A decidir</span></td></tr>
   </table>
   <div class="alt-block">
-    <div class="alt-label">Como as irmãs chegam a Kissimmee?</div>
+    <div class="alt-label">Como as irmãs chegam a Kissimmee? (Ricardo buscar = última hipótese)</div>
     <div class="alt-options" id="alt-d24-transp">
-      <button class="alt-opt" onclick="selectAlt('d24-transp',0,this)">Ricardo vai de carro buscar no TPA</button>
-      <button class="alt-opt" onclick="selectAlt('d24-transp',1,this)">Irmãs pegam Uber/Lyft por conta própria</button>
-      <button class="alt-opt" onclick="selectAlt('d24-transp',2,this)">Irmãs alugam carro próprio no TPA</button>
-      <button class="alt-opt" onclick="selectAlt('d24-transp',3,this)">A definir depois</button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',0,this)">🚐 Shuttle compartilhado (TPA Shuttles / Tampa2Orlando) — RECOMENDADO<small>Van Mercedes ~US$ 30/pessoa · Blue Express 104 (3º andar TPA) · 16+ saídas/dia · reserva antecipada · tolera atraso</small></button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',1,this)">🚆 Trem Amtrak Floridian — barato, mas arriscado<small>~US$ 13/pessoa · PARA EM KISSIMMEE · 1h18 · MAS sai da Union Station, 1x/dia, pontualidade ruim</small></button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',2,this)">🚌 Ônibus FlixBus — econômico, com baldeação<small>US$ 14–23/pessoa · 4x/dia · não sai do aeroporto</small></button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',3,this)">🚗 Uber / Lyft direto — simples, mais caro<small>Direto TPA → casa (~1h15)</small></button>
+      <button class="alt-opt" onclick="selectAlt('d24-transp',4,this)">🚐 Ricardo busca de carro (última hipótese)</button>
     </div>
   </div>
   <table>
-    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🦢</td><td class="d">Tarde de domingo — sugestão: Lake Eola <span class="st st-flex">Flexível</span><small>Domingo à tarde tem feirinha local + pôr do sol urbano · ótimo dia para esse passeio</small></td></tr>
+    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🦢</td><td class="d">Lake Eola Park — Orlando Downtown <span class="st st-ok">Definido</span><small>Domingo à tarde tem feirinha + pôr do sol urbano · lago, cisnes, coreto, pedalinhos · gratuito · ~40 min</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
-    <div class="alt-label">Tarde de domingo (opcional, se houver disposição):</div>
-    <div class="alt-options" id="alt-d24-tarde">
-      <button class="alt-opt" onclick="selectAlt('d24-tarde',0,this)">Descanso total em casa — piscina (recomendado após viagem)</button>
-      <button class="alt-opt" onclick="selectAlt('d24-tarde',1,this)">Lake Eola — feirinha de domingo + pôr do sol + jantar no The Osprey Tavern</button>
-      <button class="alt-opt" onclick="selectAlt('d24-tarde',2,this)">Disney Springs leve no fim de tarde</button>
+    <div class="alt-label">Jantar de domingo:</div>
+    <div class="alt-options" id="alt-d24-jantar">
+      <button class="alt-opt" onclick="selectAlt('d24-jantar',0,this)">Em casa (Chef Dani & Desi) — padrão econômico</button>
+      <button class="alt-opt" onclick="selectAlt('d24-jantar',1,this)">The Osprey Tavern — americana moderna, perto do Lake Eola</button>
+      <button class="alt-opt" onclick="selectAlt('d24-jantar',2,this)">Portillo's — fast-casual de Chicago, barato e ótimo (~US$ 10–15/pp)</button>
+      <button class="alt-opt" onclick="selectAlt('d24-jantar',3,this)">Maxine's on Shine — bistrô charmoso perto do parque</button>
     </div>
   </div>
+  <table>
+    <tr class="row-note"><td colspan="3">💡 Se as irmãs chegarem por conta própria, Ricardo não precisa ir ao aeroporto e o dia fica livre para o Lake Eola à tarde.</td></tr>
+  </table>
 </div>
 </div>
 
@@ -197,12 +226,13 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
     <span class="day-badge bdg-parque">Parque Disney</span>
   </div>
   <table>
-    <tr class="row-parque"><td class="t">Cedo</td><td class="i">🚐</td><td class="d">Saída para o parque — Ricardo, Aline e Gui <span class="st st-ok">Confirmado</span><small>Sem os primos · ritmo próprio</small></td></tr>
+    <tr class="row-parque"><td class="t">Cedo</td><td class="i">🎒</td><td class="d">Preparar mochila com lanches e água <span class="st st-casa">Economia</span><small>Disney permite levar comida · sanduíches, salgadinhos, frutas, água — economiza muito</small></td></tr>
     <tr class="row-parque"><td class="t">Abertura</td><td class="i">🦒</td><td class="d">Kilimanjaro Safaris — PRIORIDADE MÁXIMA<small>Animais mais ativos logo cedo</small></td></tr>
     <tr class="row-parque"><td class="t">Manhã</td><td class="i">🛸</td><td class="d">Na'vi River Journey · Pandora<small>Gui: 101 cm · com calçado passa nos de 102 cm</small></td></tr>
     <tr class="row-parque"><td class="t">Manhã</td><td class="i">🎠</td><td class="d">Brinquedos infantis · TriceraTop Spin · The Boneyard<small>Festival of the Lion King</small></td></tr>
     <tr class="row-compras"><td class="t">Paralelo</td><td class="i">🛍️</td><td class="d">Desirée e Fernanda ficam com a Minivan<small>Compras na US-192</small></td></tr>
     <tr class="row-parque"><td class="t">Tarde</td><td class="i">🎭</td><td class="d">Shows e atrações ao ritmo do Gui<small>Sair sem pressão quando cansar</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar em casa (Chef Dani & Desi) <span class="st st-casa">Em casa</span></td></tr>
     <tr class="row-note"><td colspan="3">📱 Lightning Lane: serviço do Marcello coordena. Confirmar se cobre o AK.</td></tr>
   </table>
 </div>
@@ -217,16 +247,16 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   </div>
   <table>
     <tr class="row-compras"><td class="t">Manhã</td><td class="i">🏬</td><td class="d">Ross · Marshalls · Burlington<small>The Loop e plazas da US-192</small></td></tr>
-    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">Dollar Tree · Target · Walmart · Old Navy</td></tr>
+    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">Dollar Tree · Target · Walmart · Old Navy<small>Repor suprimentos da casa se necessário</small></td></tr>
     <tr class="row-chegada"><td class="t">Casa</td><td class="i">📦</td><td class="d">Receber entregas Amazon <span class="st st-flex">Janela ideal</span><small>25–27/05 · pacotes na porta</small></td></tr>
-    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
     <div class="alt-label">Jantar do dia 26:</div>
     <div class="alt-options" id="alt-d26-jantar">
-      <button class="alt-opt" onclick="selectAlt('d26-jantar',0,this)">Em casa — cozinhar ou delivery</button>
-      <button class="alt-opt" onclick="selectAlt('d26-jantar',1,this)">Restaurante casual na US-192</button>
-      <button class="alt-opt" onclick="selectAlt('d26-jantar',2,this)">Texas Roadhouse (clássico americano)</button>
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',0,this)">Em casa (Chef Dani & Desi) — padrão econômico</button>
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',1,this)">Texas Roadhouse (US-192) — steakhouse, pãezinhos grátis ilimitados, ótimo custo</button>
+      <button class="alt-opt" onclick="selectAlt('d26-jantar',2,this)">Portillo's — fast-casual Chicago, barato (~US$ 10–15/pp)</button>
       <button class="alt-opt" onclick="selectAlt('d26-jantar',3,this)">Olive Garden (fácil com criança)</button>
     </div>
   </div>
@@ -247,13 +277,12 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   <div class="alt-block">
     <div class="alt-label">Escolha a atividade da tarde:</div>
     <div class="alt-options" id="alt-d27-tarde">
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',0,this)">Lake Eola Park — lago, cisnes, coreto (gratuito, ~40 min)</button>
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',1,this)">Celebration — cidade-cenário Disney, sorvete na Kilwins (charmosa, tranquila)</button>
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',2,this)">Disney Boardwalk — calçadão à beira do lago, barcos grátis p/ resorts (~16h)</button>
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',3,this)">Disney Springs — compras, lojas Disney (~20 min)</button>
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',4,this)">Winter Park — Park Avenue, Scenic Boat Tour, lojas charmosas (~25 min)</button>
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',5,this)">ICON Park (externo gratuito) + I-Drive</button>
-      <button class="alt-opt" onclick="selectAlt('d27-tarde',6,this)">Ficar em Kissimmee — piscina + descanso total</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',0,this)">Celebration — cidade-cenário Disney, sorvete na Kilwins (charmosa, tranquila)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',1,this)">Disney Boardwalk — calçadão à beira do lago, barcos grátis p/ resorts (~16h)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',2,this)">Disney Springs — compras, lojas Disney (~20 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',3,this)">Winter Park — Park Avenue, Scenic Boat Tour, lojas charmosas (~25 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',4,this)">ICON Park (externo gratuito) + I-Drive</button>
+      <button class="alt-opt" onclick="selectAlt('d27-tarde',5,this)">Ficar em Kissimmee — piscina + descanso total</button>
     </div>
   </div>
   <table>
@@ -262,14 +291,11 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   <div class="alt-block">
     <div class="alt-label">Noite (quarta tem desfile de carros antigos no Old Town!):</div>
     <div class="alt-options" id="alt-d27-noite">
-      <button class="alt-opt" onclick="selectAlt('d27-noite',0,this)">Old Town (Kissimmee) — calçadão retrô + desfile de carros antigos (quarta à noite!)</button>
-      <button class="alt-opt" onclick="selectAlt('d27-noite',1,this)">Jantar perto do passeio escolhido para a tarde</button>
-      <button class="alt-opt" onclick="selectAlt('d27-noite',2,this)">Voltar para casa e descansar antes do Magic Kingdom</button>
+      <button class="alt-opt" onclick="selectAlt('d27-noite',0,this)">Old Town (Kissimmee) — calçadão retrô + desfile de carros antigos (quarta!)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-noite',1,this)">Jantar em casa (Chef Dani & Desi)</button>
+      <button class="alt-opt" onclick="selectAlt('d27-noite',2,this)">Jantar fora perto do passeio da tarde</button>
     </div>
   </div>
-  <table>
-    <tr class="row-note"><td colspan="3">💡 Dia 27 é quarta — Old Town tem desfile de carros antigos à noite. Fica em Kissimmee, pertinho da casa. Boa pedida para fechar o dia.</td></tr>
-  </table>
 </div>
 </div>
 
@@ -280,6 +306,7 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
     <span class="day-badge bdg-parque">Parque Disney</span>
   </div>
   <table>
+    <tr class="row-parque"><td class="t">Cedo</td><td class="i">🎒</td><td class="d">Mochila com lanches e água <span class="st st-casa">Economia</span><small>Levar comida de casa — economiza centenas de dólares</small></td></tr>
     <tr class="row-chegada"><td class="t">Cedo</td><td class="i">🚐</td><td class="d">Irmãs fazem drop-off no TTC<small>Ficam com a Minivan</small></td></tr>
     <tr class="row-parque"><td class="t">Abertura</td><td class="i">👨‍👩‍👧‍👦</td><td class="d">Encontro com Marcello, Gabi, Thomas e Nico<small>Combinar ponto de encontro via WhatsApp</small></td></tr>
     <tr class="row-parque"><td class="t">Manhã</td><td class="i">🎠</td><td class="d">Fantasyland — Peter Pan, Small World, Dumbo, Carrossel<small>Gui é a estrela!</small></td></tr>
@@ -299,14 +326,14 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
     <button class="reset-btn" id="reset-d29" onclick="resetDay('d29')">↺ Resetar</button>
   </div>
   <table>
-    <tr class="row-viagem"><td class="t">Até 10h</td><td class="i">🧳</td><td class="d">Check-out Summerville Resort <span class="st st-ok">Fixo</span></td></tr>
+    <tr class="row-viagem"><td class="t">Até 10h</td><td class="i">🧳</td><td class="d">Check-out Summerville Resort <span class="st st-ok">Fixo</span><small>Termostato em 75F · 2 sacos de lixo na lixeira externa</small></td></tr>
     <tr class="row-viagem"><td class="t">~10h</td><td class="i">🛣️</td><td class="d">Saída Kissimmee → Tampa<small>~1h pela I-4 W</small></td></tr>
     <tr class="row-livre"><td class="t">~11h–14h</td><td class="i">🌆</td><td class="d">Parada em Tampa <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
     <div class="alt-label">O que fazer em Tampa no caminho?</div>
     <div class="alt-options" id="alt-d29-tampa">
-      <button class="alt-opt" onclick="selectAlt('d29-tampa',0,this)">Armature Works + The Riverwalk — almoço e passeio à beira-rio</button>
+      <button class="alt-opt" onclick="selectAlt('d29-tampa',0,this)">Armature Works — food hall: cada um escolhe seu balcão, ótimo p/ grupo</button>
       <button class="alt-opt" onclick="selectAlt('d29-tampa',1,this)">Ybor City — bairro cubano, almoço no Columbia Restaurant</button>
       <button class="alt-opt" onclick="selectAlt('d29-tampa',2,this)">Hyde Park Village — bairro charmoso, lojas</button>
       <button class="alt-opt" onclick="selectAlt('d29-tampa',3,this)">Parada rápida no Walmart/Target + seguir</button>
@@ -315,7 +342,9 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   </div>
   <table>
     <tr class="row-viagem"><td class="t">~14h30</td><td class="i">🛣️</td><td class="d">Saída Tampa → Bradenton<small>~45 min</small></td></tr>
-    <tr class="row-chegada"><td class="t">16h+</td><td class="i">🏠</td><td class="d">Check-in · Casa Bradenton <span class="st st-ok">Confirmado</span><small>Sammy · 5 quartos · piscina 90°F</small></td></tr>
+    <tr class="row-chegada"><td class="t">16h+</td><td class="i">🏠</td><td class="d">Check-in · Casa Bradenton <span class="st st-ok">Confirmado</span><small>3120 52nd Ave Drive West · ver aba Casas</small></td></tr>
+    <tr class="row-compras"><td class="t">Tarde</td><td class="i">🛒</td><td class="d">DIA DE ABASTECIMENTO — mercado em Bradenton <span class="st st-ok">Importante</span><small>Detwiler's (~1,5 mi) · Publix (~2 mi) · Walmart (~2,5 mi) · estoque p/ a semana toda</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar em casa — família reunida <span class="st st-casa">Em casa</span></td></tr>
     <tr class="row-note"><td colspan="3">💡 Daniel e Carol chegam de FLL — provavelmente já na casa quando vocês chegarem.</td></tr>
   </table>
 </div>
@@ -334,27 +363,26 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   <div class="alt-block">
     <div class="alt-label">Qual praia em Anna Maria?</div>
     <div class="alt-options" id="alt-d30-praia">
-      <button class="alt-opt" onclick="selectAlt('d30-praia',0,this)">Coquina Beach — boa estrutura, popular com famílias</button>
-      <button class="alt-opt" onclick="selectAlt('d30-praia',1,this)">Holmes Beach — mais tranquila</button>
-      <button class="alt-opt" onclick="selectAlt('d30-praia',2,this)">Manatee Beach — próximo, bem equipado</button>
-      <button class="alt-opt" onclick="selectAlt('d30-praia',3,this)">Bean Point — ponta norte, mais selvagem</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',0,this)">Coquina Beach — picnic, banheiros, ótima p/ famílias (~25 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',1,this)">Bradenton Beach — atmosfera relaxada, compras e restaurantes (~25 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',2,this)">Cortez Beach — charme de vila de pescadores (~25 min)</button>
+      <button class="alt-opt" onclick="selectAlt('d30-praia',3,this)">Anna Maria (geral) — praias, parques, pôr do sol (~20 min)</button>
     </div>
   </div>
   <table>
-    <tr class="row-praia"><td class="t">09h–12h</td><td class="i">🌊</td><td class="d">Manhã na praia<small>Guarda-sóis, cadeiras e carrinho na casa</small></td></tr>
     <tr class="row-praia"><td class="t">~12h</td><td class="i">🍽️</td><td class="d">Almoço <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
     <div class="alt-label">Almoço do dia 30:</div>
     <div class="alt-options" id="alt-d30-almoco">
-      <button class="alt-opt" onclick="selectAlt('d30-almoco',0,this)">Wicked Cantina — clima de praia, Anna Maria</button>
-      <button class="alt-opt" onclick="selectAlt('d30-almoco',1,this)">Lanche na praia + almoço em casa</button>
-      <button class="alt-opt" onclick="selectAlt('d30-almoco',2,this)">Rod & Reel Pier — casual à beira-mar</button>
+      <button class="alt-opt" onclick="selectAlt('d30-almoco',0,this)">Lanche na praia + almoço em casa (econômico)</button>
+      <button class="alt-opt" onclick="selectAlt('d30-almoco',1,this)">Anna Maria Oyster Bar (Cortez) — antes da ponte · preços justos · 1¢ por polegada da criança!</button>
+      <button class="alt-opt" onclick="selectAlt('d30-almoco',2,this)">Skinny's Place — cabana histórica na ilha, hambúrgueres baratos</button>
     </div>
   </div>
   <table>
-    <tr class="row-casa"><td class="t">Tarde</td><td class="i">🏊</td><td class="d">Casa — piscina aquecida e hot tub<small>Sala de jogos: arcades, bilhar, pebolim</small></td></tr>
-    <tr class="row-casa"><td class="t">Noite</td><td class="i">🔥</td><td class="d">1º grande BBQ da família reunida!<small>Churrasqueira + fire pit + bar ao ar livre</small></td></tr>
+    <tr class="row-casa"><td class="t">Tarde</td><td class="i">🏊</td><td class="d">Casa — piscina aquecida e hot tub<small>Sala de jogos: arcades, bilhar, pebolim · sem vidro no deck</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🔥</td><td class="d">1º grande BBQ da família reunida! <span class="st st-casa">Em casa</span><small>Churrasqueira + fire pit + bar ao ar livre · carnes compradas no mercado</small></td></tr>
   </table>
 </div>
 </div>
@@ -362,20 +390,20 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 <div class="day-section" id="d31">
 <div class="day-card">
   <div class="day-header hdr-praia">
-    <div><div class="day-date-label">Domingo · 31/05/2026</div><div class="day-title">🏖️ Praia · Passeio · Jantar beira-mar</div></div>
+    <div><div class="day-date-label">Domingo · 31/05/2026</div><div class="day-title">🏖️ Praia · Passeio · Jantar</div></div>
     <span class="day-badge bdg-praia">Praia + Passeio</span>
     <button class="reset-btn" id="reset-d31" onclick="resetDay('d31')">↺ Resetar</button>
   </div>
   <table>
     <tr class="row-praia"><td class="t">~09h</td><td class="i">🌊</td><td class="d">Anna Maria Island — manhã na praia</td></tr>
-    <tr class="row-praia"><td class="t">~12h</td><td class="i">🍽️</td><td class="d">Almoço em Anna Maria <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-praia"><td class="t">~12h</td><td class="i">🍽️</td><td class="d">Almoço <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
-    <div class="alt-label">Almoço em Anna Maria Island:</div>
+    <div class="alt-label">Almoço do dia 31:</div>
     <div class="alt-options" id="alt-d31-almoco">
-      <button class="alt-opt" onclick="selectAlt('d31-almoco',0,this)">Wicked Cantina — vista para o golfo</button>
-      <button class="alt-opt" onclick="selectAlt('d31-almoco',1,this)">Rod & Reel Pier — sobre a água</button>
-      <button class="alt-opt" onclick="selectAlt('d31-almoco',2,this)">Pine Avenue — cafés e bistrôs</button>
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',0,this)">Lanche na praia + almoço em casa (econômico)</button>
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',1,this)">Skinny's Place — cabana histórica na praia, barato</button>
+      <button class="alt-opt" onclick="selectAlt('d31-almoco',2,this)">Anna Maria Oyster Bar (Cortez) — frutos do mar, preço justo</button>
       <button class="alt-opt" onclick="selectAlt('d31-almoco',3,this)">Voltar para casa</button>
     </div>
   </div>
@@ -385,22 +413,22 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   <div class="alt-block">
     <div class="alt-label">Atividade da tarde:</div>
     <div class="alt-options" id="alt-d31-tarde">
-      <button class="alt-opt" onclick="selectAlt('d31-tarde',0,this)">Bradenton Riverwalk — parquinho para o Gui</button>
-      <button class="alt-opt" onclick="selectAlt('d31-tarde',1,this)">Village of the Arts — bairro artístico</button>
-      <button class="alt-opt" onclick="selectAlt('d31-tarde',2,this)">Casa — piscina e descanso</button>
-      <button class="alt-opt" onclick="selectAlt('d31-tarde',3,this)">Explorar mais Anna Maria — Pine Avenue</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',0,this)">Bradenton Riverwalk — parquinho, splash fountain, skate park</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',1,this)">Village of the Arts — bairro artístico, galerias</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',2,this)">Mote Marine Aquarium (Sarasota) — tubarões, peixes-boi, tartarugas</button>
+      <button class="alt-opt" onclick="selectAlt('d31-tarde',3,this)">Casa — piscina e descanso</button>
     </div>
   </div>
   <table>
-    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
     <div class="alt-label">Jantar do dia 31:</div>
     <div class="alt-options" id="alt-d31-jantar">
-      <button class="alt-opt" onclick="selectAlt('d31-jantar',0,this)">Pier 22 — à beira do Rio Manatee</button>
-      <button class="alt-opt" onclick="selectAlt('d31-jantar',1,this)">Riverhouse Waterfront — culinária costeira</button>
-      <button class="alt-opt" onclick="selectAlt('d31-jantar',2,this)">Oak & Stone — pizza artesanal</button>
-      <button class="alt-opt" onclick="selectAlt('d31-jantar',3,this)">Em casa — churrasqueira</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',0,this)">Em casa (Chef Dani & Desi) — padrão</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',1,this)">Pier 22 — à beira do Rio Manatee, jantar especial</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',2,this)">Riverhouse Waterfront — culinária costeira</button>
+      <button class="alt-opt" onclick="selectAlt('d31-jantar',3,this)">Anna Maria Oyster Bar — frutos do mar, Early Bird mais barato</button>
     </div>
   </div>
 </div>
@@ -408,47 +436,31 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 
 <div class="day-section" id="d01">
 <div class="day-card">
-  <div class="day-header hdr-viagem">
-    <div><div class="day-date-label">Segunda · 01/06/2026</div><div class="day-title">🌆 Tampa em grupo</div></div>
-    <span class="day-badge bdg-viagem">Passeio</span>
+  <div class="day-header hdr-compras">
+    <div><div class="day-date-label">Segunda · 01/06/2026</div><div class="day-title">🎣 Bass Pro + Brandon (dia do Pai)</div></div>
+    <span class="day-badge bdg-compras">Passeio</span>
     <button class="reset-btn" id="reset-d01" onclick="resetDay('d01')">↺ Resetar</button>
   </div>
   <table>
     <tr class="row-praia"><td class="t">Manhã</td><td class="i">🏊</td><td class="d">Manhã livre — praia ou piscina em casa</td></tr>
-    <tr class="row-viagem"><td class="t">~13h</td><td class="i">🚗</td><td class="d">Saída para Tampa — grupo todo (2 carros)<small>~1h · atenção p/ Ricardo Brum: evitar longas caminhadas</small></td></tr>
-    <tr class="row-livre"><td class="t">~14h</td><td class="i">🍺</td><td class="d">Almoço em Tampa <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-viagem"><td class="t">~10h30</td><td class="i">🚗</td><td class="d">Saída para Brandon/Tampa — grupo todo (2 carros)<small>~45–50 min subindo a I-75 · dia inteiro na região</small></td></tr>
+    <tr class="row-compras"><td class="t">Dia</td><td class="i">🎣</td><td class="d">Bass Pro Shops — Ricardo e Pai <span class="st st-ok">Definido</span><small>10501 Palm River Rd, Tampa · loja-museu: aquários gigantes, vida selvagem, barcos · plana e ampla · cadeira de rodas disponível se o joelho do Pai cansar</small></td></tr>
+    <tr class="row-compras"><td class="t">Dia</td><td class="i">🛍️</td><td class="d">Brandon Town Center — Aline, Gui e demais<small>Shopping fechado e climatizado · Macy's, Dillard's, Apple, Target · passear com o Gui no carrinho longe do sol</small></td></tr>
+    <tr class="row-livre"><td class="t">Almoço</td><td class="i">🍽️</td><td class="d">Almoço na região <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
-    <div class="alt-label">Almoço em Tampa:</div>
+    <div class="alt-label">Almoço em Brandon:</div>
     <div class="alt-options" id="alt-d01-almoco">
-      <button class="alt-opt" onclick="selectAlt('d01-almoco',0,this)">Armature Works — mercado gastronômico à beira-rio</button>
-      <button class="alt-opt" onclick="selectAlt('d01-almoco',1,this)">Columbia Restaurant (Ybor City) — cubano histórico</button>
-      <button class="alt-opt" onclick="selectAlt('d01-almoco',2,this)">Hyde Park Village — restaurantes variados</button>
+      <button class="alt-opt" onclick="selectAlt('d01-almoco',0,this)">The Cheesecake Factory — cardápio enorme, bom p/ grupo grande</button>
+      <button class="alt-opt" onclick="selectAlt('d01-almoco',1,this)">Bahama Breeze — caribenho, ambiente descontraído</button>
+      <button class="alt-opt" onclick="selectAlt('d01-almoco',2,this)">Praça de alimentação do shopping — cada um escolhe, econômico</button>
     </div>
   </div>
   <table>
-    <tr class="row-livre"><td class="t">Tarde</td><td class="i">🚶</td><td class="d">Passeio em Tampa <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-viagem"><td class="t">Fim tarde</td><td class="i">🛣️</td><td class="d">Retorno para Bradenton<small>~45–50 min · chegar antes de ficar tarde para o Gui</small></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar em casa (Chef Dani & Desi) <span class="st st-casa">Em casa</span></td></tr>
+    <tr class="row-note"><td colspan="3">💡 Bass Pro abre 10h. O Bass Pro (Palm River Rd) e o Brandon Town Center (Brandon Blvd) ficam a poucos minutos um do outro — combinar ponto e horário de reencontro pelo WhatsApp.</td></tr>
   </table>
-  <div class="alt-block">
-    <div class="alt-label">Atividade da tarde:</div>
-    <div class="alt-options" id="alt-d01-tarde">
-      <button class="alt-opt" onclick="selectAlt('d01-tarde',0,this)">The Riverwalk — beira-rio, skyline</button>
-      <button class="alt-opt" onclick="selectAlt('d01-tarde',1,this)">Ybor City — lojas vintage, murais</button>
-      <button class="alt-opt" onclick="selectAlt('d01-tarde',2,this)">International Plaza — compras premium</button>
-      <button class="alt-opt" onclick="selectAlt('d01-tarde',3,this)">Hyde Park Village — lojas e cafés</button>
-    </div>
-  </div>
-  <table>
-    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar antes de voltar <span class="st st-flex">Flexível</span></td></tr>
-  </table>
-  <div class="alt-block">
-    <div class="alt-label">Jantar em Tampa ou voltar?</div>
-    <div class="alt-options" id="alt-d01-jantar">
-      <button class="alt-opt" onclick="selectAlt('d01-jantar',0,this)">Jantar em Ybor City — cubano</button>
-      <button class="alt-opt" onclick="selectAlt('d01-jantar',1,this)">Jantar em Hyde Park Village</button>
-      <button class="alt-opt" onclick="selectAlt('d01-jantar',2,this)">Voltar para Bradenton e jantar em casa</button>
-    </div>
-  </div>
 </div>
 </div>
 
@@ -466,9 +478,9 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   <div class="alt-block">
     <div class="alt-label">Almoço do dia 02:</div>
     <div class="alt-options" id="alt-d02-almoco">
-      <button class="alt-opt" onclick="selectAlt('d02-almoco',0,this)">Mr. & Mrs. Crab — frutos do mar casual</button>
-      <button class="alt-opt" onclick="selectAlt('d02-almoco',1,this)">Wicked Cantina — despedida de Anna Maria</button>
-      <button class="alt-opt" onclick="selectAlt('d02-almoco',2,this)">Voltar para casa</button>
+      <button class="alt-opt" onclick="selectAlt('d02-almoco',0,this)">Lanche na praia + almoço em casa (econômico)</button>
+      <button class="alt-opt" onclick="selectAlt('d02-almoco',1,this)">Anna Maria Oyster Bar — despedida da ilha, frutos do mar</button>
+      <button class="alt-opt" onclick="selectAlt('d02-almoco',2,this)">Skinny's Place — hambúrgueres na praia</button>
     </div>
   </div>
   <table>
@@ -478,9 +490,9 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   <div class="alt-block">
     <div class="alt-label">Jantar de despedida (última noite completa de Ricardo, Aline e Gui):</div>
     <div class="alt-options" id="alt-d02-jantar">
-      <button class="alt-opt" onclick="selectAlt('d02-jantar',0,this)">BBQ grandioso no quintal 🔥</button>
+      <button class="alt-opt" onclick="selectAlt('d02-jantar',0,this)">BBQ grandioso no quintal 🔥 (Chef Dani & Desi)</button>
       <button class="alt-opt" onclick="selectAlt('d02-jantar',1,this)">Pier 22 — jantar especial à beira-rio</button>
-      <button class="alt-opt" onclick="selectAlt('d02-jantar',2,this)">Oak & Stone — pizza artesanal</button>
+      <button class="alt-opt" onclick="selectAlt('d02-jantar',2,this)">Anna Maria Oyster Bar — frutos do mar, ambiente de festa</button>
     </div>
   </div>
   <table>
@@ -509,14 +521,14 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
   </div>
   <table>
     <tr class="row-livre"><td class="t">Tarde</td><td class="i">🧺</td><td class="d">Arrumar as malas + descanso</td></tr>
-    <tr class="row-livre"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar de encerramento <span class="st st-flex">Flexível</span></td></tr>
+    <tr class="row-casa"><td class="t">Noite</td><td class="i">🍽️</td><td class="d">Jantar de encerramento <span class="st st-flex">Flexível</span></td></tr>
   </table>
   <div class="alt-block">
     <div class="alt-label">Jantar de encerramento:</div>
     <div class="alt-options" id="alt-d03-jantar">
-      <button class="alt-opt" onclick="selectAlt('d03-jantar',0,this)">Oak & Stone — pizza artesanal</button>
+      <button class="alt-opt" onclick="selectAlt('d03-jantar',0,this)">Em casa — refeição especial no quintal (Chef Dani & Desi)</button>
       <button class="alt-opt" onclick="selectAlt('d03-jantar',1,this)">Riverhouse Waterfront — culinária costeira</button>
-      <button class="alt-opt" onclick="selectAlt('d03-jantar',2,this)">Em casa — refeição especial no quintal</button>
+      <button class="alt-opt" onclick="selectAlt('d03-jantar',2,this)">Oak & Stone — pizza artesanal</button>
     </div>
   </div>
   <table>
@@ -535,7 +547,7 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
     <button class="reset-btn" id="reset-d04" onclick="resetDay('d04')">↺ Resetar</button>
   </div>
   <table>
-    <tr class="row-chegada"><td class="t">Até 10h</td><td class="i">🧳</td><td class="d">Check-out da casa (Sammy) <span class="st st-ok">Fixo</span></td></tr>
+    <tr class="row-chegada"><td class="t">Até 10h</td><td class="i">🧳</td><td class="d">Check-out da casa (Sammy) <span class="st st-ok">Fixo</span><small>3 portas trancadas · luzes apagadas · linens nos cestos</small></td></tr>
     <tr class="row-pendente"><td class="t">Dia todo</td><td class="i">✈️</td><td class="d">Desirée e Fernanda — voo AA 2798 às 19h39 <span class="st st-pend">A definir</span></td></tr>
   </table>
   <div class="alt-block">
@@ -554,97 +566,83 @@ td.d small { display: block; color: #888; font-size: 12px; margin-top: 2px; line
 </div>
 </div>
 
+<!-- CASAS -->
+<div class="casas-section" id="casas-section">
+  <div class="casa-card">
+    <div class="casa-header hdr-chegada">
+      <h2>🏠 Kissimmee — Summerville Resort, Casa 04</h2>
+      <div class="casa-sub">23 a 29/05 · Anfitriões: Marcelo &amp; Stephanie · Confirmação HMDHZEZW5S</div>
+      <a class="casa-maps" href="https://www.google.com/maps/search/?api=1&query=7595%20Sunflower%20Circle%2C%20Kissimmee%2C%20FL%2034747" target="_blank">📍 Abrir no Google Maps</a>
+    </div>
+    <div class="casa-body">
+      <div class="casa-block"><h4>📍 Endereço</h4><ul><li>7595 Sunflower Circle, Kissimmee, FL 34747<small style="color:#888;display:block">(usar "Circle" para entregas — confirmado pelo anfitrião)</small></li></ul></div>
+      <div class="codes">
+        <h4>🔑 Códigos de acesso</h4>
+        <div class="code-row"><span>Código do portão</span><span class="code-val">#1982</span></div>
+        <div class="code-row"><span>Porta principal (keypad)</span><span class="code-val">1407 + TEEHO</span></div>
+        <div class="code-row"><span>Portão de pedestres</span><span class="code-val">C8579Z</span></div>
+        <div class="code-row"><span>Academia e banheiro</span><span class="code-val">1218#</span></div>
+        <div class="code-row"><span>Piscina</span><span class="code-val">*9644#</span></div>
+        <div class="privacy-warn">⚠️ Dados sensíveis — não compartilhar este arquivo publicamente.</div>
+      </div>
+      <div class="wifi-box"><h4>📶 Wi-Fi</h4><div class="code-row"><span>Rede</span><span class="code-val">Costamar7595</span></div><div class="code-row"><span>Senha</span><span class="code-val">Sunflower7595</span></div></div>
+      <div class="casa-block"><h4>🚮 Lixo</h4><ul><li>Sacos do lado de fora <strong>só de manhã</strong> (guaxinins à noite)</li><li>Limite: 2 sacos/dia · só a lixeira externa fornecida</li><li>Proibido: sacolas de mercado, lixo solto, papelão na lixeira</li><li>Itens grandes → lixeira da comunidade</li></ul></div>
+      <div class="casa-block"><h4>❄️ Ar-condicionado</h4><ul><li>Não definir abaixo de 20°C (risco de congelar/vazar)</li><li>Portas e janelas fechadas com A/C ligado</li><li>Danos por uso indevido = responsabilidade do hóspede</li></ul></div>
+      <div class="casa-block"><h4>📋 Regras</h4><ul><li>Máx. 8 hóspedes · sem pets · proibido fumar · sem festas</li><li>Silêncio: 22h–8h · não mover móveis · sapatos fora do carpete</li><li>Louça na máquina antes do check-out</li></ul></div>
+      <div class="casa-block"><h4>🚪 Check-out (até 10h)</h4><ul><li>Toalhas no banheiro/cesto (não tirar camas)</li><li>Lixo na lixeira externa · termostato em <strong>75F</strong></li><li>Desligar luzes, ventiladores, cafeteira · trancar tudo</li><li>Check-out tardio: pedir 48h antes</li></ul></div>
+      <div class="casa-block"><h4>📞 Contato</h4><ul><li>Marcelo e Stephanie: +1 (914) 437-0866</li></ul></div>
+    </div>
+  </div>
+
+  <div class="casa-card">
+    <div class="casa-header hdr-praia">
+      <h2>🏠 Bradenton — Oásis de diversão em família</h2>
+      <div class="casa-sub">29/05 a 04/06 · Anfitrião: Sammy · Confirmação HMJE855BD2</div>
+      <a class="casa-maps" href="https://www.google.com/maps/search/?api=1&query=3120%2052nd%20Avenue%20Drive%20West%2C%20Bradenton%2C%20FL%2034207" target="_blank">📍 Abrir no Google Maps</a>
+    </div>
+    <div class="casa-body">
+      <div class="casa-block"><h4>📍 Endereço</h4><ul><li>3120 52nd Avenue Drive West, Bradenton, FL 34207</li></ul></div>
+      <div class="codes">
+        <h4>🔑 Acesso (fechadura Yale)</h4>
+        <div class="code-row"><span>Código de entrada</span><span class="code-val">a receber</span></div>
+        <div style="font-size:12px;color:#7a5500;margin-top:6px;line-height:1.5"><strong>Trancar:</strong> botão "YALE" no topo/centro.<br><strong>Destrancar:</strong> tocar o teclado, digitar o código de 4 dígitos, depois o "check mark" (✓).</div>
+        <div class="privacy-warn">⚠️ Anfitrião ainda não enviou o código — cobrar 1–3 dias antes do check-in.</div>
+      </div>
+      <div class="wifi-box"><h4>📶 Wi-Fi</h4><div class="code-row"><span>Rede</span><span class="code-val">Sunshine Paradise</span></div><div class="code-row"><span>Senha</span><span class="code-val">fivestarreviews</span></div></div>
+      <div class="casa-block"><h4>👶 Bebê e enxoval</h4><ul><li>Cadeirão, Pack &amp; Play, babá eletrônica, trocador: closet do quarto principal</li><li>Lençóis e toalhas de piscina: closet fora da cozinha</li><li><strong>Sem vidro no deck da piscina</strong></li></ul></div>
+      <div class="casa-block"><h4>📋 Regras</h4><ul><li>Proibido fumar dentro · só papel higiênico no vaso</li><li>Não deixar comida fora (pragas) · portas fechadas</li><li>Janelas/cortinas fechadas ajudam no calor e contra insetos</li><li>Silêncio: <strong>21h–09h</strong> (o guia interno cita 22h; valer o mais restritivo)</li><li>Lavar louça e ligar máquina ao sair</li></ul></div>
+      <div class="casa-block"><h4>🚪 Check-out (até 10h)</h4><ul><li>Linens/toalhas nos cestos · desligar luzes</li><li><strong>Trancar as 3 portas</strong>: 2 de correr (quintal) + frente</li></ul></div>
+      <div class="casa-block"><h4>🏪 Mercados</h4><ul><li>Detwiler's Farm Market — 3500 53rd Ave W (~1,5 mi)</li><li>Publix — 4651 Cortez Rd W (~2 mi)</li><li>Walmart Supercenter — 5315 Cortez Rd W (~2,5 mi)</li></ul></div>
+      <div class="casa-block"><h4>🏥 Hospital</h4><ul><li>HCA Florida Blake Hospital — 2020 59th St W (~3,5 mi)</li></ul></div>
+      <div class="casa-block"><h4>🍽️ Restaurantes próximos (anfitrião)</h4><ul><li>Sage Biscuit Café — brunch · Anna Maria Oyster Bar — frutos do mar</li><li>Riverhouse Waterfront — frutos do mar/burgers/ribs</li><li>Ortygia, Tiramisu, Arte Caffe — italianos · O'Bricks — pub</li></ul></div>
+      <div class="casa-block"><h4>🏖️ Praias</h4><ul><li>Anna Maria Island — ~7 mi · ~20 min</li><li>Bradenton Beach — ~7,5 mi · ~25 min</li><li>Cortez Beach / Coquina Beach — ~8 mi · ~25 min</li></ul></div>
+      <div class="casa-block"><h4>🎡 Atrações</h4><ul><li>Bradenton Riverwalk — playground, splash, skate park</li><li>Mote Marine Aquarium (Sarasota) · Robinson Preserve · G.T. Bray Park</li></ul></div>
+      <div class="casa-block"><h4>📞 Emergência (casa)</h4><ul><li>305-613-4564</li></ul></div>
+    </div>
+  </div>
+</div>
+
 <div class="refs-section" id="refs-section">
 <div class="refs">
   <h2>📋 Informações úteis da viagem</h2>
   <div class="ref-grid">
-    <div class="ref-card">
-      <h3>✈️ Voos — Ricardo, Aline e Gui</h3>
-      <ul>
-        <li><strong>Ida:</strong> 23/05 · pouso TPA 13h33</li>
-        <li><strong>Volta:</strong> 04/06 · CM 782 às 05h23</li>
-        <li>Copa Airlines · Classe Executiva</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>✈️ Voos — Desirée e Fernanda</h3>
-      <ul>
-        <li><strong>Ida:</strong> 24/05 · TPA 09h28</li>
-        <li><strong>Volta:</strong> 04/06 · TPA 19h39</li>
-      </ul><br>
-      <h3>✈️ Daniel, Carol, Pai e Isabel</h3>
-      <ul>
-        <li><strong>Ida:</strong> 29/05 · chegam FLL 06h20</li>
-        <li><strong>Volta:</strong> 06/06 · FLL 08h20</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>🏠 Kissimmee (23–29/05)</h3>
-      <ul>
-        <li>Summerville Resort, Casa 04</li>
-        <li>Anfitrião: Marcelo &amp; Stephanie</li>
-        <li>Check-in: 23/05 16h · Check-out: 29/05 10h</li>
-        <li>3 suítes · piscina aquecida</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>🏠 Bradenton (29/05–04/06)</h3>
-      <ul>
-        <li>Oásis de diversão em família · Sammy</li>
-        <li>Check-in: 29/05 16h · Check-out: 04/06 10h</li>
-        <li>5 quartos · casa térrea · piscina 90°F</li>
-        <li>Sala de jogos · hot tub · BBQ</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>🚐 Carros</h3>
-      <ul>
-        <li><strong>Minivan:</strong> National · TPA (Ricardo)</li>
-        <li>Retirada 23/05 14h30 · Devolução 04/06 03h00</li>
-        <li><strong>Sienna:</strong> Thrifty · FLL (Pai/Daniel)</li>
-        <li>29/05 a 06/06 · 8 lugares</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>🎢 Disney</h3>
-      <ul>
-        <li>3x 2-Day Base Ticket</li>
-        <li>Animal Kingdom: 25/05</li>
-        <li>Magic Kingdom: 28/05 (com Marcello)</li>
-        <li>Lightning Lane: serviço do Marcello</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>🌳 Passeios gratuitos em Orlando</h3>
-      <ul>
-        <li><strong>Lake Eola</strong> — melhor domingo à tarde (feirinha)</li>
-        <li><strong>Disney Springs</strong> — fim de tarde, qualquer dia</li>
-        <li><strong>Disney Boardwalk</strong> — chegar ~16h</li>
-        <li><strong>Celebration</strong> — cidade-cenário, sorvete Kilwins</li>
-        <li><strong>Old Town</strong> (Kissimmee) — quarta/sábado à noite, carros antigos</li>
-        <li><strong>Winter Park</strong> — Park Avenue, Scenic Boat Tour</li>
-        <li><strong>ICON Park</strong> — I-Drive, qualquer hora</li>
-      </ul>
-    </div>
-    <div class="ref-card">
-      <h3>🍽️ Restaurantes Bradenton</h3>
-      <ul>
-        <li><strong>Pier 22</strong> — beira-rio, jantar especial</li>
-        <li><strong>Riverhouse</strong> — culinária costeira</li>
-        <li><strong>Oak &amp; Stone</strong> — pizza e cervejaria</li>
-        <li><strong>Mr. &amp; Mrs. Crab</strong> — frutos do mar</li>
-        <li><strong>Wicked Cantina</strong> — Anna Maria, praia</li>
-      </ul>
-    </div>
+    <div class="ref-card"><h3>✈️ Voos — Ricardo, Aline e Gui</h3><ul><li><strong>Ida:</strong> 23/05 · pouso TPA 13h33</li><li><strong>Volta:</strong> 04/06 · CM 782 às 05h23</li><li>Copa Airlines · Classe Executiva</li></ul></div>
+    <div class="ref-card"><h3>✈️ Voos — Desirée e Fernanda</h3><ul><li><strong>Ida:</strong> 24/05 · TPA 09h28</li><li><strong>Volta:</strong> 04/06 · TPA 19h39</li></ul><br><h3>✈️ Daniel, Carol, Pai e Isabel</h3><ul><li><strong>Ida:</strong> 29/05 · chegam FLL 06h20</li><li><strong>Volta:</strong> 06/06 · FLL 08h20</li></ul></div>
+    <div class="ref-card"><h3>🚐 Carros</h3><ul><li><strong>Minivan:</strong> National · TPA (Ricardo) · 23/05–04/06</li><li><strong>Sienna:</strong> Thrifty · FLL (Pai/Daniel) · 29/05–06/06</li></ul></div>
+    <div class="ref-card"><h3>🎢 Disney</h3><ul><li>3x 2-Day Base Ticket</li><li>Animal Kingdom: 25/05 · Magic Kingdom: 28/05</li><li>Levar lanche de casa (permitido) — economia</li></ul></div>
+    <div class="ref-card"><h3>🍽️ Filosofia de refeições</h3><ul><li><strong>Padrão:</strong> em casa (Chef Dani &amp; Desi)</li><li>Abastecer: dias 23 (Kissimmee) e 29 (Bradenton)</li><li>Levar lanche aos parques (25 e 28)</li><li>Restaurante = exceção, dias de cansaço</li></ul></div>
+    <div class="ref-card"><h3>🍴 Restaurantes (custo-benefício)</h3><ul><li><strong>Kissimmee:</strong> Texas Roadhouse, Portillo's, Olive Garden</li><li><strong>Tampa:</strong> Armature Works (food hall)</li><li><strong>Brandon:</strong> Cheesecake Factory, Bahama Breeze</li><li><strong>Bradenton/AMI:</strong> Anna Maria Oyster Bar, Skinny's, Pier 22</li></ul></div>
+    <div class="ref-card"><h3>🚐 Transporte das irmãs (TPA → Kissimmee)</h3><ul><li><strong>Shuttle:</strong> ~US$ 30/pp · Blue Express 104 · recomendado</li><li><strong>Trem Amtrak:</strong> ~US$ 13/pp · para em Kissimmee · arriscado</li><li><strong>Uber/Lyft:</strong> direto, mais caro</li></ul></div>
+    <div class="ref-card"><h3>🌳 Passeios gratuitos Orlando</h3><ul><li><strong>Lake Eola</strong> — domingo à tarde ✓ dia 24</li><li>Disney Springs / Boardwalk · Celebration</li><li>Old Town (quarta/sábado) · Winter Park</li></ul></div>
   </div>
 </div>
 </div>
 
 </div>
-<div class="footer">v5 · maio 2026 · Flórida 2026 — Família Marantes &amp; Brum · Roteiro (orçamento em arquivo separado)</div>
+<div class="footer">v8 · maio 2026 · Flórida 2026 — Família Marantes &amp; Brum · Roteiro + Casas (orçamento em arquivo separado)</div>
 
 <script>
-const STORAGE_KEY = 'florida2026_roteiro_v5';
+const STORAGE_KEY = 'florida2026_roteiro_v8';
 let state = {};
 try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { state = {}; }
 function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){} }
@@ -652,12 +650,15 @@ let currentPart = 'p1';
 let currentDay = { p1: 'd23', p2: 'd30' };
 function showPart(part) {
   currentPart = part;
-  document.querySelectorAll('.part-tab').forEach((t,i) => { t.classList.toggle('active', ['p1','p2','refs'][i] === part); });
+  const idx = ['p1','p2','casas','refs'].indexOf(part);
+  document.querySelectorAll('.part-tab').forEach((t,i) => { t.classList.toggle('active', i === idx); });
   document.getElementById('nav-p1').style.display = (part === 'p1') ? 'flex' : 'none';
   document.getElementById('nav-p2').style.display = (part === 'p2') ? 'flex' : 'none';
   document.querySelectorAll('.day-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.refs-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.casas-section').forEach(s => s.classList.remove('active'));
   if (part === 'refs') { document.getElementById('refs-section').classList.add('active'); }
+  else if (part === 'casas') { document.getElementById('casas-section').classList.add('active'); }
   else {
     document.getElementById(currentDay[part]).classList.add('active');
     const nav = document.getElementById('nav-' + part);
